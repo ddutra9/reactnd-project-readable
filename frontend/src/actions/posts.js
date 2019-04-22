@@ -2,7 +2,7 @@ import {getAllPostsAPI, getAllPostsInCategoryAPI, voteOnPostAPI, deletePostAPI} 
 import {showLoading, hideLoading} from 'react-redux-loading'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const ADD_POST = 'ADD_TWEET'
+export const ADD_POST = 'ADD_POST'
 export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
 export const SHOWING_CATEGORY_POSTS = 'SHOWING_CATEGORY_POSTS'
 export const UPDATE_POST = 'UPDATE_POST'

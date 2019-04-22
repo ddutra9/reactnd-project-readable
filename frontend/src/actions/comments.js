@@ -8,7 +8,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const SHOW_COMMENT_FORM = 'SHOW_COMMENT_FORM'
 export const HIDE_COMMENT_FORM = 'HIDE_COMMENT_FORM'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
-export const DELETE__COMMENT = 'DELETE__COMMENT'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const handleComments = (postId) => dispatch => {
     dispatch(showLoading())
