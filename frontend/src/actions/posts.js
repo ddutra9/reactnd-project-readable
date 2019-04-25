@@ -16,10 +16,6 @@ export const handleReceivePosts = (category) => dispatch => {
         type: FETCH_CATEGORY_POSTS,
         posts,
       })
-      dispatch({
-        type: SHOWING_CATEGORY_POSTS,
-        category,
-      })
       dispatch(hideLoading())
     })
 }
@@ -32,7 +28,7 @@ export const handleReceivePosts = () => dispatch => {
     })
 }
 
-export function handleAddPosts(text, replyingTo) => (dispatch, getState) => {
+export const handleAddPosts = (text, replyingTo) => (dispatch, getState) => {
   dispatch(showLoading())
 
   return saveTweet({
