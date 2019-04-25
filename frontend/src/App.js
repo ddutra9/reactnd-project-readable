@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history';
 import Posts from './components/Posts'
 
 const divMain = {
-  paddingBottom: '30px'
+  paddingTop: '15px'
 };
 
 const routes = [

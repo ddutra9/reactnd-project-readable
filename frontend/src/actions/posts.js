@@ -32,6 +32,18 @@ export const handleReceivePosts = () => dispatch => {
     })
 }
 
+export function handleAddPosts(text, replyingTo) => (dispatch, getState) => {
+  dispatch(showLoading())
+
+  return saveTweet({
+    text,
+    author: authedUser,
+    replyingTo
+  })
+    .then((post) => dispatch(addPost(post)))
+    .then(() => dispatch(hideLoading()))
+}
+
 export function addPost(post) {
   return {
     type: ADD_POST,
