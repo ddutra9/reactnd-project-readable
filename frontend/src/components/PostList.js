@@ -5,7 +5,7 @@ const PostList = ({ post, deletePost, votePost }) => {
 
     return (
         <Grid.Column width={8}>
-            <Card fluid>
+            <Card>
                 <Card.Content>
                     <Card.Header>{post.title}</Card.Header>
                     <Card.Meta>Category: {post.category}, by {post.author}, {post.date}</Card.Meta>

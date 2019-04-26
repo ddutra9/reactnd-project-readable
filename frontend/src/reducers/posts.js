@@ -1,5 +1,5 @@
-import {DELETE_POST, ADD_POST, UPDATE_POST, VOTE_POST, FETCH_CATEGORY_POSTS} from '../actions/posts'
-import {SORT_POSTS_BY} from '../actions'
+import {DELETE_POST, ADD_POST, UPDATE_POST, VOTE_POST, FETCH_CATEGORY_POSTS, RECEIVE_POSTS} from '../actions/posts'
+import {SORT_POST_BY} from '../actions'
 
 export default function posts(state = {}, action) {
   const { posts, post, type, sortBy} = action
@@ -12,6 +12,8 @@ export default function posts(state = {}, action) {
         }, {})
       }
       return state
+    case RECEIVE_POSTS: 
+      return posts
     case VOTE_POST:
     case ADD_POST:
     case UPDATE_POST:
@@ -20,7 +22,7 @@ export default function posts(state = {}, action) {
         ...state,
         [post.id]: post
       }
-    case SORT_POSTS_BY:
+    case SORT_POST_BY:
        return sortBy
     default:
       return state

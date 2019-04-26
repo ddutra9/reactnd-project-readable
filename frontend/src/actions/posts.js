@@ -9,7 +9,7 @@ export const UPDATE_POST = 'UPDATE_POST'
 export const VOTE_POST = 'VOTE_POST'
 export const DELETE_POST = 'DELETE_POST'
 
-export const handleReceivePosts = (category) => dispatch => {
+export const handleReceivePostsBy = (category) => dispatch => {
     dispatch(showLoading())
     return getAllPostsInCategoryAPI(category).then((posts) => {
       dispatch({
@@ -31,13 +31,7 @@ export const handleReceivePosts = () => dispatch => {
 export const handleAddPosts = (text, replyingTo) => (dispatch, getState) => {
   dispatch(showLoading())
 
-  return saveTweet({
-    text,
-    author: authedUser,
-    replyingTo
-  })
-    .then((post) => dispatch(addPost(post)))
-    .then(() => dispatch(hideLoading()))
+  return "sjksj"
 }
 
 export function addPost(post) {

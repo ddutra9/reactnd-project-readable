@@ -9,22 +9,25 @@ const getAuthHeaders = () => {
 
 
 export const getAllPostsAPI = () =>
-  fetch(`${api}/posts`, { getAuthHeaders() })
+  fetch(`${api}/posts`, {
+    method: 'GET',
+    headers: getAuthHeaders()
+  })
     .then(res => res.json())
     .then(data => data)
 
 export const getCommentsForPostAPI = (postId) =>
-  fetch(`${api}/posts/${postId}/comments`, { getAuthHeaders() })
+  fetch(`${api}/posts/${postId}/comments`, getAuthHeaders())
     .then(res => res.json())
     .then(data => data)
 
 export const getCategoriesAPI = () =>
-  fetch(`${api}/categories`, { getAuthHeaders() })
+  fetch(`${api}/categories`, getAuthHeaders())
     .then(res => res.json())
     .then(data => data.categories)
 
 export const getAllPostsInCategoryAPI = (category) =>
-  fetch(`${api}/${category}/posts`, { getAuthHeaders() })
+  fetch(`${api}/${category}/posts`, getAuthHeaders())
     .then(res => res.json())
     .then(data => data)
 
@@ -48,7 +51,10 @@ export const editPostAPI = (data) =>
   fetch(`${api}/posts/${data.postId}`, {
     method: 'PUT',
     headers: getAuthHeaders(),
-    body: JSON.stringify({ data.title, data.body})
+    body: JSON.stringify({ 
+      title: data.title, 
+      body: data.body
+    })
   }).then(res => res.json())
 
 export const deletePostAPI = (postId) =>
@@ -100,6 +106,6 @@ export const deleteCommentAPI = (commentId) =>
 export const voteOnCommentAPI = (commentId, isLiked) =>
   fetch(`${api}/comments/${commentId}`, {
     method: 'POST',
-    headers: headers,
+    headers: getAuthHeaders(),
     body: JSON.stringify({ option: isLiked? 'upVote' : 'downVote'})
   }).then(res => res.json())

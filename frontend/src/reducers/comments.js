@@ -1,6 +1,6 @@
 import {FETCH_COMMENTS, VOTE_COMMENT, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT, SHOW_COMMENT_FORM, HIDE_COMMENT_FORM} from '../actions/comments'
 
-export function comments(state = {}, action) {
+export default function comments(state = {}, action) {
   const {comments, comment} = action
   switch (action.type) {
     case FETCH_COMMENTS:

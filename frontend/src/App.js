@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { Router, Route, Switch } from 'react-router-dom'
-import { Dimmer, Loader } from 'semantic-ui-react'
 import Page404 from './components/Page404'
 import Header from './components/header'
 import { createBrowserHistory } from 'history';
+import LoadingBar from 'react-redux-loading'
 import Posts from './components/Posts'
 
 const divMain = {
@@ -15,10 +16,12 @@ const routes = [
 ];
 
 class App extends Component {
+
     render() {
       return (
         <Router history={createBrowserHistory()}>
           <Fragment>
+            <LoadingBar />
             <div>
               <Header />
               <div style={divMain}>
@@ -34,4 +37,8 @@ class App extends Component {
     }
 }
 
-export default App
+const mapState = (state) => ({
+  status: state.status
+})
+
+export default connect(mapState, null)(App)

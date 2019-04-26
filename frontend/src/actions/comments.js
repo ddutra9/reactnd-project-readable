@@ -8,7 +8,6 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const SHOW_COMMENT_FORM = 'SHOW_COMMENT_FORM'
 export const HIDE_COMMENT_FORM = 'HIDE_COMMENT_FORM'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const handleComments = (postId) => dispatch => {
     dispatch(showLoading())
@@ -70,7 +69,7 @@ export const handleDeleteComment = (commentId) => dispatch => {
     dispatch(showLoading())
     return deleteCommentAPI(commentId).then((comment) => {
       dispatch({
-        type: DELETE__COMMENT,
+        type: DELETE_COMMENT,
         comment,
       })
       dispatch(hideLoading())
