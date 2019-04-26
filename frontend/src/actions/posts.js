@@ -8,24 +8,53 @@ export const SHOWING_CATEGORY_POSTS = 'SHOWING_CATEGORY_POSTS'
 export const UPDATE_POST = 'UPDATE_POST'
 export const VOTE_POST = 'VOTE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const SORT_POST_BY = 'SORT_POST_BY'
 
 export const handleReceivePostsBy = (category) => dispatch => {
     dispatch(showLoading())
-    return getAllPostsInCategoryAPI(category).then((posts) => {
-      dispatch({
-        type: FETCH_CATEGORY_POSTS,
-        posts,
+    if(category){
+      return getAllPostsInCategoryAPI(category).then((posts) => {
+        dispatch({
+          type: FETCH_CATEGORY_POSTS,
+          posts,
+        })
+        dispatch(hideLoading())
       })
-      dispatch(hideLoading())
-    })
-}
+    }
 
-export const handleReceivePosts = () => dispatch => {
-    dispatch(showLoading())
+    
     return getAllPostsAPI().then((posts) => {
       dispatch({type: RECEIVE_POSTS, posts})
       dispatch(hideLoading())
     })
+}
+
+export function sortPost(sortBy) {
+  return {
+    type: SORT_POST_BY,
+    sortBy,
+  }
+}
+
+export const handleSortPost = (order, posts) => dispatch => {
+  switch(order){
+    case 'timestampDesc':
+      return posts.sort(function(postA, postB) {
+        return postB.timestamp - postA.timestamp;
+      })
+    case 'voteScoreAsc':
+      return posts.sort(function(postA, postB) {
+        return postA.commentCount - postB.commentCount;
+      })
+    case 'voteScoreDesc':
+      return posts.sort(function(postA, postB) {
+        return postB.commentCount - postA.commentCount;
+      })
+    default:
+      return posts.sort(function(postA, postB) {
+        return postA.timestamp - postB.timestamp;
+      })
+  }
 }
 
 export const handleAddPosts = (text, replyingTo) => (dispatch, getState) => {

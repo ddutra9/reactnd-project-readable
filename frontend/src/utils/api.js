@@ -30,7 +30,10 @@ export const getCategoriesAPI = () =>
     .then(data => data.categories)
 
 export const getAllPostsInCategoryAPI = (category) =>
-  fetch(`${api}/${category}/posts`, getAuthHeaders())
+  fetch(`${api}/${category}/posts`, {
+    method: 'GET',
+    headers: getAuthHeaders()
+  })
     .then(res => res.json())
     .then(data => data)
 

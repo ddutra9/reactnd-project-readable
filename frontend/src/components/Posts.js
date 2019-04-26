@@ -1,28 +1,43 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Grid, Segment, Item } from 'semantic-ui-react'
-import { createBrowserHistory } from 'history';
-import { handleReceivePosts } from '../actions/posts'
+import { handleReceivePostsBy, handleSortPost } from '../actions/posts'
 import { handleGetCategories } from '../actions/index'
 import PostList from './PostList'
 import Filter from './Filter'
+import SortPost from './SortPost'
+import {store} from '../index'
 
 class Posts extends Component {
 
+    state = {
+        filterBy: undefined,
+        sortBy: 'timestampAsc'
+    }
+
     componentDidMount() {
-        const filterValue = this.props.match.params.hasOwnProperty('category_id') ? this.props.match.params.category_id : 'all'
         this.props.getPostsBy()
         this.props.getAllCategories()
     }
 
-    handleGetPostsBy = (value) => {
-        // this.props.getPostsBy(value)
-        // createBrowserHistory().push(`/category/${value}`)
+    handleChangeFilter = (e, { value }) => {
+        if(value === 'all'){
+            this.props.getPostsBy()
+            this.setState({filterBy : undefined});
+        } else{
+            console.log(value)
+            this.props.getPostsBy(value)
+            this.setState({filterBy : value});
+        }
+    }
+
+    handleSortBy = (value) => {
+       
     }
 
     render() {
-        const { posts, categories, sortBy, filterBy, match} = this.props
-        console.log(match)
+        const { categories } = this.props
+        const {filterBy, sortBy, posts} = this.state
 
         return (
             <Container>
@@ -35,8 +50,8 @@ class Posts extends Component {
                                     <Item.Content>
                                         <Item.Description>
                                             <Filter
-                                                onChange={this.handleGetPostsBy}
-                                                selected={match.params.category_id ? match.params.category_id : 'all'}
+                                                onChange={this.handleChangeFilter}
+                                                selected={filterBy ? filterBy : 'all'}
                                                 categories={categories} />
                                         </Item.Description>
                                     </Item.Content>
@@ -45,7 +60,9 @@ class Posts extends Component {
                             <Segment>
                                 <Item>
                                     <Item.Header as="b">Sort</Item.Header>
-                                   
+                                    <SortPost
+                                        onChange={this.handleSortBy}
+                                        selected={sortBy} />
                                 </Item>
                             </Segment>
                         </Segment.Group>
@@ -74,17 +91,16 @@ class Posts extends Component {
 
 const mapState = (state, props) => {
     return {
+        categories: state.categories,
         posts: state.posts,
-        sortBy: state.posts.sortBy,
-        filterBy: state.posts.filterBy,
-        categories: state.categories
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
-        getPostsBy: () => dispatch(handleReceivePosts()),
-        getAllCategories: () => dispatch(handleGetCategories())
+        getPostsBy: (value) => dispatch(handleReceivePostsBy(value)),
+        getAllCategories: () => dispatch(handleGetCategories()),
+        orderPosts: (order, posts) => dispatch(handleSortPost(order, posts))
     }
 }
 

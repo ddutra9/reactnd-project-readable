@@ -1,17 +1,9 @@
-import {DELETE_POST, ADD_POST, UPDATE_POST, VOTE_POST, FETCH_CATEGORY_POSTS, RECEIVE_POSTS} from '../actions/posts'
-import {SORT_POST_BY} from '../actions'
+import {DELETE_POST, ADD_POST, UPDATE_POST, VOTE_POST, FETCH_CATEGORY_POSTS, RECEIVE_POSTS, SORT_POST_BY} from '../actions/posts'
 
 export default function posts(state = {}, action) {
   const { posts, post, type, sortBy} = action
   switch (type) {
     case FETCH_CATEGORY_POSTS:
-      if(posts) {
-        return posts.reduce((obj, p) => {
-          obj[p.id] = p
-          return obj
-        }, {})
-      }
-      return state
     case RECEIVE_POSTS: 
       return posts
     case VOTE_POST:
