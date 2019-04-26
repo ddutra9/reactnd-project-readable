@@ -22,7 +22,10 @@ export const getCommentsForPostAPI = (postId) =>
     .then(data => data)
 
 export const getCategoriesAPI = () =>
-  fetch(`${api}/categories`, getAuthHeaders())
+  fetch(`${api}/categories`, {
+    method: 'GET',
+    headers: getAuthHeaders()
+  })
     .then(res => res.json())
     .then(data => data.categories)
 

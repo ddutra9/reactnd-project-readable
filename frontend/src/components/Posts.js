@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Container, Grid, Segment, Item } from 'semantic-ui-react'
 import { createBrowserHistory } from 'history';
 import { handleReceivePosts } from '../actions/posts'
+import { handleGetCategories } from '../actions/index'
 import PostList from './PostList'
 import Filter from './Filter'
 
@@ -11,15 +12,17 @@ class Posts extends Component {
     componentDidMount() {
         const filterValue = this.props.match.params.hasOwnProperty('category_id') ? this.props.match.params.category_id : 'all'
         this.props.getPostsBy()
+        this.props.getAllCategories()
     }
 
     handleGetPostsBy = (value) => {
-        this.props.getPostsBy(value)
-        createBrowserHistory().push(`/category/${value}`)
+        // this.props.getPostsBy(value)
+        // createBrowserHistory().push(`/category/${value}`)
     }
 
     render() {
         const { posts, categories, sortBy, filterBy, match} = this.props
+        console.log(match)
 
         return (
             <Container>
@@ -33,6 +36,7 @@ class Posts extends Component {
                                         <Item.Description>
                                             <Filter
                                                 onChange={this.handleGetPostsBy}
+                                                selected={match.params.category_id ? match.params.category_id : 'all'}
                                                 categories={categories} />
                                         </Item.Description>
                                     </Item.Content>
@@ -79,7 +83,8 @@ const mapState = (state, props) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        getPostsBy: () => dispatch(handleReceivePosts())
+        getPostsBy: () => dispatch(handleReceivePosts()),
+        getAllCategories: () => dispatch(handleGetCategories())
     }
 }
 
