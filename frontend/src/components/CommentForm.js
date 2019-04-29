@@ -4,33 +4,31 @@ import { Form, Button } from 'semantic-ui-react'
 import actions from '../../actions'
 
 const CommentForm = (props) => {
-    const { values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, onCancel, initialValues} = props
-    const hasError = (field) => touched[field] && errors[field] ? true : false
+    const { handleChange, isSubmitting, onCancel} = props
 
-    const updateStatus = initialValues.hasOwnProperty('created_at')
+    const onSubmit = (e) => {
+        isSubmitting = true
+        props.handleSubmit()
+    }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Field error={hasError('author')}>
+        <Form onSubmit={onSubmit}>
+            <Form.Field >
                 <label>Your Full Name</label>
                 <input
                     type="text" name="author"
                     onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.author}
+                    value={author}
                 />
-                {hasError('author') && <ErrorMessage msg={errors.author} />}
             </Form.Field>
 
-            <Form.Field error={hasError('comment')}>
+            <Form.Field >
                 <label>Your Comment</label>
                 <textarea
-                    name="comment" rows={3}
+                    name="body" rows={3}
                     onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.comment}
+                    value={body}
                 ></textarea>
-                {hasError('comment') && <ErrorMessage msg={errors.comment} />}
             </Form.Field>
 
             <Button type="submit" disabled={isSubmitting} loading={isSubmitting}>

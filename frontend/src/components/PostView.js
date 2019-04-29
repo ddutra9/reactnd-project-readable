@@ -17,10 +17,6 @@ class PostView extends Component {
         getCommentsByPost(post.id)
     }
 
-    componentWillUnmount() {
-        this.props.setCurrentPost(undefined)
-    }
-
     savePost = () => {
         this.props.savePost({...this.props.post, title: 'Updated in...' + (Math.random(100) * 100)})
     }
