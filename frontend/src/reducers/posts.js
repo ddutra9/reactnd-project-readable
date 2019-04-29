@@ -9,13 +9,16 @@ export default function posts(state = {}, action) {
     case VOTE_POST:
     case ADD_POST:
     case UPDATE_POST:
+      return state.map(p => {
+        if(p.id === post.id){
+          return post
+        }
+        return p
+      })
     case DELETE_POST:
-      return {
-        ...state,
-        [post.id]: post
-      }
+      return state.filter(p => p.id !== post.id)
     case SORT_POST_BY:
-       return sortBy
+       return posts
     default:
       return state
   }

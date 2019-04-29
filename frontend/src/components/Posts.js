@@ -6,13 +6,13 @@ import { handleGetCategories } from '../actions/index'
 import PostList from './PostList'
 import Filter from './Filter'
 import SortPost from './SortPost'
-import {store} from '../index'
+import {withRouter} from 'react-router-dom'
 
 class Posts extends Component {
 
     state = {
         filterBy: undefined,
-        sortBy: 'timestampAsc'
+        sortBy: 'timestampAsc',
     }
 
     componentDidMount() {
@@ -32,12 +32,13 @@ class Posts extends Component {
     }
 
     handleSortBy = (value) => {
-       
+        this.props.orderPosts(value.id, this.props.posts)
+        this.setState({sortBy : value.id});
     }
 
     render() {
-        const { categories } = this.props
-        const {filterBy, sortBy, posts} = this.state
+        const { categories, posts } = this.props
+        const {filterBy, sortBy} = this.state
 
         return (
             <Container>
@@ -75,9 +76,7 @@ class Posts extends Component {
                                     <PostList key={post.id} post={post} />
                                 ))}
                                 {posts.length === 0 && (
-                                    <span style={{ marginTop: '16px' }}>
-                                        {`Sorry! There are no results that match with the category '${filterBy.value}'.`}
-                                    </span>
+                                    `Sorry! There are no results that match with the category '${filterBy.value}'.`
                                 )}
                             </Grid>
                         </div>
@@ -92,7 +91,7 @@ class Posts extends Component {
 const mapState = (state, props) => {
     return {
         categories: state.categories,
-        posts: state.posts,
+        posts: state.posts
     }
 }
 
