@@ -17,17 +17,16 @@ export const getAllPostsAPI = () =>
     .then(data => data)
 
 export const getCommentsForPostAPI = (postId) =>
-  fetch(`${api}/posts/${postId}/comments`, getAuthHeaders())
-    .then(res => res.json())
-    .then(data => data)
+  fetch(`${api}/posts/${postId}/comments`, {
+    method: 'GET',
+    headers: getAuthHeaders()
+  }).then(res => res.json()).then(data => data)
 
 export const getCategoriesAPI = () =>
   fetch(`${api}/categories`, {
     method: 'GET',
     headers: getAuthHeaders()
-  })
-    .then(res => res.json())
-    .then(data => data.categories)
+  }).then(res => res.json()).then(data => data.categories)
 
 export const getAllPostsInCategoryAPI = (category) =>
   fetch(`${api}/${category}/posts`, {
@@ -88,7 +87,7 @@ export const addCommentAPI = (data) =>
       body: data.body,
       author: data.author,
       parentId: data.parentId,
-      timestamp: data.timestamp,
+      timestamp: Date.now(),
       voteScore: 0
     })
   }).then(res => res.json())

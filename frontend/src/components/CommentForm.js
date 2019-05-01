@@ -1,54 +1,68 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Form, Button } from 'semantic-ui-react'
-import actions from '../../actions'
 
-const CommentForm = (props) => {
-    const { handleChange, isSubmitting, onCancel} = props
+class CommentForm extends Component {
 
-    const onSubmit = (e) => {
-        isSubmitting = true
-        props.handleSubmit()
+    state = {
+        isSubmitting: false,
+        id: this.props.comment ? this.props.comment.id : undefined,
+        parentId: this.props.postId,
+        body: this.props.comment? this.props.comment.body : undefined,
+        author: this.props.comment? this.props.comment.author : undefined,
+    }
+   
+    handleChange = (e) => {
+        e.preventDefault()
+        this.setState({[e.target.name]: e.target.value})
     }
 
-    return (
-        <Form onSubmit={onSubmit}>
-            <Form.Field >
-                <label>Your Full Name</label>
-                <input
-                    type="text" name="author"
-                    onChange={handleChange}
-                    value={author}
-                />
-            </Form.Field>
+    onSubmit = (e) => {
+        this.setState({isSubmitting: true})
+        const {author, body, parentId, id} = this.state
+        this.props.onSubmit(id, parentId, body, author)
+        this.setState({author: '', body: ''})
+    }
 
-            <Form.Field >
-                <label>Your Comment</label>
-                <textarea
-                    name="body" rows={3}
-                    onChange={handleChange}
-                    value={body}
-                ></textarea>
-            </Form.Field>
+    render() {
+        const { handleChange, isSubmitting, onCancel, comment} = this.props
+        const {author, body} = this.state
 
-            <Button type="submit" disabled={isSubmitting} loading={isSubmitting}>
-                { comment ? 'Save' : 'Add'}
-            </Button>
-
-            {comment && (
-                <Button basic type="button" disabled={isSubmitting} onClick={() => onCancel()}>
-                    Cancel
+        return (
+            <Form onSubmit={this.onSubmit}>
+                <Form.Field >
+                    <label>Author</label>
+                    <input
+                        type="text" name="author"
+                        disabled={this.props.comment}
+                        onChange={handleChange}
+                        value={author}
+                    />
+                </Form.Field>
+    
+                <Form.Field >
+                    <label>Your Comment</label>
+                    <textarea
+                        name="body" rows={3}
+                        onChange={handleChange}
+                        value={body}
+                    ></textarea>
+                </Form.Field>
+    
+                <Button type="submit" disabled={isSubmitting} loading={isSubmitting}>
+                    { comment ? 'Save' : 'Add'}
                 </Button>
-            )}
-
-        </Form>
-    )
-}
-
-const mapDispatch = (dispatch) => {
-    return {
-        saveComment: (comment) => dispatch(actions.comments.saveComment(comment))
+    
+                {comment && (
+                    <Button basic type="button" disabled={isSubmitting} onClick={() => onCancel()}>
+                        Cancel
+                    </Button>
+                )}
+    
+            </Form>
+        )
     }
+    
 }
 
-export default connect(null, mapDispatch)(CommentForm)
+export default connect()(CommentForm)

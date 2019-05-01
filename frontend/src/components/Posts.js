@@ -6,7 +6,6 @@ import { handleGetCategories } from '../actions/index'
 import PostList from './PostList'
 import Filter from './Filter'
 import SortPost from './SortPost'
-import {withRouter} from 'react-router-dom'
 
 class Posts extends Component {
 

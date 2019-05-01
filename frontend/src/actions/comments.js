@@ -1,4 +1,4 @@
-import {getCommentsForPostAPI, voteOnCommentAPI, deleteCommentAPI } from '../utils/api.js'
+import {getCommentsForPostAPI, voteOnCommentAPI, deleteCommentAPI, addCommentAPI } from '../utils/api.js'
 import {showLoading, hideLoading} from 'react-redux-loading'
 
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
@@ -16,8 +16,7 @@ export const handleComments = (postId) => dispatch => {
         type: FETCH_COMMENTS,
         comments,
       })
-      dispatch(hideLoading())
-    })
+    }).then(() => {dispatch(hideLoading())})
 }
 
 export function addComment(comment) {
@@ -25,6 +24,20 @@ export function addComment(comment) {
     type: ADD_COMMENT,
     comment,
   }
+}
+
+function generateUID () {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
+export const handleAddComments = (parentId, body, author) => dispatch => {
+  dispatch(showLoading())
+
+  const data = {id: generateUID (), body: body, author: author, parentId: parentId}
+
+  return addCommentAPI(data).then((comment) => {
+    dispatch({type: ADD_COMMENT, comment})
+  }).then(() => dispatch(hideLoading()))
 }
 
 export function updateComment(comment) {

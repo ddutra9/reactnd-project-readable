@@ -2,90 +2,95 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Button, Icon } from 'semantic-ui-react'
 import { handleVoteOnPost } from '../actions/posts'
-import CommentList from '../../components/comments/CommentList'
+import CommentList from './CommentList'
 import { handleComments } from '../actions/comments'
+
+const likeButton = {
+    padding: '10px 6px 10px 12px',
+    margin: '0',
+    height: '100%',
+    borderRadius: '0',
+    boxShadow: 'none',
+    backgroundColor: 'white'
+}
+
+const divVote = {
+    background: 'rgb(239, 239, 239)',
+    padding: '20px 0',
+    maginTOp: '30ṕx'
+}
+
+const divRoot = {
+    marginBottom: '-30px'
+}
 
 class PostView extends Component {
 
-    getCurrentPost = (posts, postId) => {
-        return posts.filter(p => p.id === postId)[0]
-    }  
-
-    componentDidMount() {
-        const post = this.getCurrentPost(this.props.posts, this.props.match.params.post_id)
-        this.setState({post : post});
-        getCommentsByPost(post.id)
+    constructor(props) {
+        super(props);
+        this.props.getCommentsByPost(this.props.post.id)
     }
 
-    savePost = () => {
-        this.props.savePost({...this.props.post, title: 'Updated in...' + (Math.random(100) * 100)})
+    onLike = () => {
+        const postId = this.props.match.params.post_id
+        this.props.likeUnlike(postId, true)
     }
 
-    handleLike = () => {
-        likeUnlike(post.id, true)
-    }
-
-    handleUnLike = () => {
-        likeUnlike(post.id, false)
+    onUnLike = () => {
+        const postId = this.props.match.params.post_id
+        this.props.likeUnlike(postId, false)
     }
 
     gotoBack = () => {
         this.props.history.goBack()
     }
 
-    renderPost = () => {
-        const {post} = this.state
+    render() {
+        const {post} = this.props
 
         return (
-            <div>
+            <div style={divRoot}>
                 <Container>
                     <div className="pull-right">
                         <Button basic onClick={this.gotoBack}>Back</Button>
                     </div>
 
-                    <div>
-                        <div>{post.author}</div>
-                        <div>{post.body.split('\n').map((text, index) => (
-                            <p key={index}>{text}</p>)
-                        )}</div>
+                    <div class="ui raised very padded text container segment">
+                        <h2 class="ui header">{post.title}</h2>
+                        <p>Category: {post.category}, by {post.author}, {post.date}</p>
+                        <p>{post.body}</p>
+                        <div style={divVote}>
+                            <Container>
+                                <span>Você gostou deste post?</span>
+                                <div>
+                                    <Button style={likeButton} onClick={this.onLike}>
+                                        <Icon name="thumbs up" />
+                                    </Button>
+                                    <span />
+                                    <Button style={likeButton} onClick={this.onUnLike}>
+                                        <Icon name="thumbs down" />
+                                    </Button>
+                                    <span className="votes"> {post.voteScore}</span>
+                                </div>
+                            </Container>
+                        </div>
                     </div>
                 </Container>
-
-                <div>
-                    <Container>
-                        <div>
-                            <span>Did you like this post?</span>
-                            <div>
-                                <Button onClick={this.handleLike}>
-                                    <Icon name="thumbs up" />
-                                </Button>
-                                <span />
-                                <Button onClick={this.handleUnLike}>
-                                    <Icon name="thumbs down" />
-                                </Button>
-                            </div>
-                            <span className="votes">{post.votes}</span>
-                        </div>
-                    </Container>
-                </div>
 
                 <CommentList postId={post.id} />
             </div>
         )
     }
-
-    render() {
-        return (
-            <div>
-                {this.renderPost()}
-            </div>
-        )
-    }
 }
+
+const getCurrentPost = (posts, postId) => {
+    return posts.filter(p => p.id === postId)[0]
+}  
 
 const mapState = (state, props) => {
     return {
-        posts: state.posts
+        posts: state.posts,
+        post: getCurrentPost(state.posts, props.match.params.post_id),
     }
 }
 
@@ -96,4 +101,4 @@ const mapDispatch = (dispatch) => {
     }
 }
 
-export default withRouter(connect(mapState, mapDispatch)(PostView))
+export default connect(mapState, mapDispatch)(PostView)

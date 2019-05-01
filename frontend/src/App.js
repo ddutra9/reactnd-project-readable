@@ -6,6 +6,7 @@ import Header from './components/header'
 import LoadingBar from 'react-redux-loading'
 import Posts from './components/Posts'
 import PostEdit from './components/PostEdit'
+import PostView from './components/PostView'
 import PostCreate from './components/PostCreate'
 
 const divMain = {
@@ -25,6 +26,7 @@ class App extends Component {
                 <Switch>
                   <Route path='/' exact component={Posts} />
                   <Route path='/posts/:post_id/edit' component={PostEdit} />
+                  <Route path='/posts/:post_id/view' component={PostView} />
                   <Route path='/new-post' component={PostCreate} />
                   <Route component={Page404} />
                 </Switch>

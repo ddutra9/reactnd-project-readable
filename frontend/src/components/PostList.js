@@ -19,6 +19,10 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
         deletePost(post.id)
     }
 
+    const onViewPost = () => {
+        history.push(`/posts/${post.id}/view`)
+    }
+
     const handleEditPost = () => {
         history.push(`/posts/${post.id}/edit`)
     }
@@ -52,6 +56,7 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
                         </Grid.Column>
 
                         <Grid.Column width={8} style={{ textAlign: "right" }}>
+                            <Button style={likeButton} onClick={onViewPost}>view</Button>
                             <Button style={likeButton} onClick={handleEditPost}>edit</Button>
                             <Button style={likeButton} onClick={handleDeletePost}>remove</Button>
                         </Grid.Column>

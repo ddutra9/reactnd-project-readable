@@ -4,13 +4,7 @@ export default function comments(state = {}, action) {
   const {comments, comment} = action
   switch (action.type) {
     case FETCH_COMMENTS:
-      if(comments) {
-        return comments.reduce((obj, c) => {
-          obj[c.id] = c
-          return obj
-        }, {})
-      }
-      return state
+      return comments
     case VOTE_COMMENT:
     case ADD_COMMENT:
     case UPDATE_COMMENT:
