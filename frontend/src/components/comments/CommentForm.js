@@ -12,7 +12,7 @@ class CommentForm extends Component {
         author: this.props.comment? this.props.comment.author : undefined,
     }
    
-    handleChange = (e) => {
+    onChange = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value})
     }
@@ -35,7 +35,7 @@ class CommentForm extends Component {
                     <input
                         type="text" name="author"
                         disabled={this.props.comment}
-                        onChange={this.handleChange}
+                        onChange={this.onChange}
                         value={author}
                     />
                 </Form.Field>
@@ -44,7 +44,7 @@ class CommentForm extends Component {
                     <label>Your Comment</label>
                     <textarea
                         name="body" rows={3}
-                        onChange={this.handleChange}
+                        onChange={this.onChange}
                         value={body}
                     ></textarea>
                 </Form.Field>

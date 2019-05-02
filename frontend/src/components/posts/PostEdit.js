@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
 import PostForm from './PostForm'
 import {withRouter} from 'react-router-dom'
-import {handleUpdatePosts} from '../actions/posts'
+import {handleUpdatePosts} from '../../actions/posts'
 
 class PostEdit extends Component {
     state = {
@@ -18,16 +18,11 @@ class PostEdit extends Component {
         this.setState({post : this.getCurrentPost()});
     }
 
-    handleCancel = () => {
+    onCancel = () => {
         this.props.history.goBack()
     }
 
-    submitted = (response) => {
-        this.props.history.push(`/posts/${this.props.match.params.post_id}`)
-    }
-
-    handleSubmit = (title, body, category, author, id) => {
-        console.log(body)
+    onSubmit = (title, body, category, author, id) => {
         this.props.updatePost(id, title, body)
         this.props.history.goBack()
     }
@@ -39,9 +34,8 @@ class PostEdit extends Component {
                 <PostForm
                     enableReinitialize
                     post={post}
-                    handleSubmit={this.handleSubmit}
-                    onSubmitSuccess={this.submitted}
-                    onCancel={this.handleCancel}
+                    onSubmit={this.onSubmit}
+                    onCancel={this.onCancel}
                 />
             </Container>
         )
@@ -49,8 +43,11 @@ class PostEdit extends Component {
 
     renderLoading() {
         return (
-            <div>
-                Loading...
+            <div class="ui segment">
+                <p></p>
+                <div class="ui active dimmer">
+                    <div class="ui loader"></div>
+                </div>
             </div>
         )
     }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Grid, Segment, Item } from 'semantic-ui-react'
-import { handleReceivePostsBy, handleSortPost } from '../actions/posts'
-import { handleGetCategories } from '../actions/index'
+import { handleReceivePostsBy, handleSortPost } from '../../actions/posts'
+import { handleGetCategories } from '../../actions/index'
 import PostList from './PostList'
-import Filter from './Filter'
-import SortPost from './SortPost'
+import Filter from '../Filter'
+import SortPost from '../SortPost'
 
 class Posts extends Component {
 
@@ -19,18 +19,17 @@ class Posts extends Component {
         this.props.getAllCategories()
     }
 
-    handleChangeFilter = (e, { value }) => {
+    onChangeFilter = (e, { value }) => {
         if(value === 'all'){
-            this.props.getPostsBy()
+            this.props.getPostsBy(undefined)
             this.setState({filterBy : undefined});
         } else{
-            console.log(value)
             this.props.getPostsBy(value)
             this.setState({filterBy : value});
         }
     }
 
-    handleSortBy = (value) => {
+    onSortBy = (value) => {
         this.props.orderPosts(value.id, this.props.posts)
         this.setState({sortBy : value.id});
     }
@@ -50,7 +49,7 @@ class Posts extends Component {
                                     <Item.Content>
                                         <Item.Description>
                                             <Filter
-                                                onChange={this.handleChangeFilter}
+                                                onChange={this.onChangeFilter}
                                                 selected={filterBy ? filterBy : 'all'}
                                                 categories={categories} />
                                         </Item.Description>
@@ -61,7 +60,7 @@ class Posts extends Component {
                                 <Item>
                                     <Item.Header as="b">Sort</Item.Header>
                                     <SortPost
-                                        onChange={this.handleSortBy}
+                                        onChange={this.onSortBy}
                                         selected={sortBy} />
                                 </Item>
                             </Segment>

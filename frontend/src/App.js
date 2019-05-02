@@ -5,9 +5,9 @@ import Page404 from './components/Page404'
 import Header from './components/header'
 import LoadingBar from 'react-redux-loading'
 import Posts from './components/Posts'
-import PostEdit from './components/PostEdit'
-import PostView from './components/PostView'
-import PostCreate from './components/PostCreate'
+import PostEdit from './components/posts/PostEdit'
+import PostView from './components/posts/PostView'
+import PostCreate from './components/posts/PostCreate'
 
 const divMain = {
   paddingTop: '15px'

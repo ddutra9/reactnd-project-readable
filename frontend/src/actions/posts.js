@@ -41,22 +41,22 @@ export const handleSortPost = (order, posts) => dispatch => {
   switch(order){
     case 'timestampDesc':
       posts = posts.sort(function(postA, postB) {
-        return postB.timestamp - postA.timestamp;
+        return postA.timestamp - postB.timestamp;
       })
       break
     case 'voteScoreAsc':
       posts = posts.sort(function(postA, postB) {
-        return postA.commentCount - postB.commentCount;
+        return postB.commentCount - postA.commentCount;
       })
       break
     case 'voteScoreDesc':
       posts = posts.sort(function(postA, postB) {
-        return postB.commentCount - postA.commentCount;
+        return postA.commentCount - postB.commentCount;
       })
       break
     default:
       posts = posts.sort(function(postA, postB) {
-        return postA.timestamp - postB.timestamp;
+        return postB.timestamp - postA.timestamp;
       })
   }
 

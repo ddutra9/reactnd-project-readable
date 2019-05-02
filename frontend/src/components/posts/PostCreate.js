@@ -3,15 +3,15 @@ import PostForm from './PostForm'
 import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
-import {handleAddPosts} from '../actions/posts'
+import {handleAddPosts} from '../../actions/posts'
 
 const CreatePost = (props) => {
 
-    const handleCancel = () => {
+    const onCancel = () => {
         props.history.goBack()
     }
 
-    const handleSubmit = (title, body, category, author, id) => {
+    const onSubmit = (title, body, category, author, id) => {
         console.log(body)
         props.addPost(title, category, body, author)
         props.history.goBack()
@@ -19,9 +19,10 @@ const CreatePost = (props) => {
 
     return (
         <Container>
-            <PostForm post={undefined}
-                    handleSubmit={handleSubmit}
-                    onCancel={handleCancel} />
+            <PostForm 
+                post={undefined}
+                onSubmit={onSubmit}
+                onCancel={onCancel} />
         </Container>
     )
 }

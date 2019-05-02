@@ -5,8 +5,6 @@ export const FETCH_COMMENTS = 'FETCH_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const SHOW_COMMENT_FORM = 'SHOW_COMMENT_FORM'
-export const HIDE_COMMENT_FORM = 'HIDE_COMMENT_FORM'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 
 export const handleComments = (postId) => dispatch => {
@@ -59,19 +57,6 @@ export function deleteComment(comment) {
   return {
     type: DELETE_COMMENT,
     comment,
-  }
-}
-
-export function showCommentForm(comment) {
-  return {
-    type: SHOW_COMMENT_FORM,
-    comment,
-  }
-}
-
-export function hideCommentForm() {
-  return {
-    type: HIDE_COMMENT_FORM
   }
 }
 

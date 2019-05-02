@@ -1,19 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Container } from 'semantic-ui-react'
-import { handleAddComments } from '../actions/comments'
+import { handleAddComments } from '../../actions/comments'
 import CommentForm from './CommentForm'
+import CommentItem from './CommentItem'
 
 
 const CommentList = (props) => {
 
     const comments = props.comments
-
-    // const renderItems = () => {
-    //     return comments.map(comment => (
-    //         <CommentItem key={comment.id} data={comment} postId={props.postId} />
-    //     ))
-    // }
 
     const onSubmit = (id, parentId, body, author) => {
         props.addComment(parentId, body, author)
@@ -22,13 +17,17 @@ const CommentList = (props) => {
     return (
         <Container>
             <h3>Comments: {comments.length}</h3>
-            {/* {comments.length > 0 ? renderItems() : "Be the first to write a comment"} */}
+            {comments.map(comment => (
+                <CommentItem comment={comment} postId={props.postId} />
+            ))}
 
             <hr className="divider" />
 
             <h3>Leave a Comment</h3>
-            <CommentForm className="comment-form" 
-                postId={props.postId} onSubmit={onSubmit} />
+            <CommentForm 
+                className="comment-form" 
+                postId={props.postId} 
+                onSubmit={onSubmit} />
         </Container>
     )
 }

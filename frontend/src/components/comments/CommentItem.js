@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Icon, Container } from 'semantic-ui-react'
-import {handleVoteOnComment, handleDeleteComment, handleUpdateComment} from '../actions/comments'
+import {handleVoteOnComment, handleDeleteComment, handleUpdateComment} from '../../actions/comments'
 import CommentForm from './CommentForm'
 
 class CommentItem extends Component {
@@ -16,15 +16,15 @@ class CommentItem extends Component {
 
     onDelete = () => {
         this.onUpdateStatus('saveOrDelete')
-        this.props.deleteComment(this.props.data.id)
+        this.props.deleteComment(this.props.comment.id)
     }
 
     onLike = () => {
-        this.props.likeOrUnlike(this.props.data.id, true)
+        this.props.likeOrUnlike(this.props.comment.id, true)
     }
 
     onUnlike = () => {
-        this.props.likeOrUnlike(this.props.data.id, false)
+        this.props.likeOrUnlike(this.props.comment.id, false)
     }
 
     onSubmit = (id, parentId, body, author) => {
@@ -39,7 +39,7 @@ class CommentItem extends Component {
     }
 
     render() {
-        const comment = this.props.data
+        const comment = this.props.comment
 
         return (
             <Container>

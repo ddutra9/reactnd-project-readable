@@ -1,4 +1,4 @@
-import {FETCH_COMMENTS, VOTE_COMMENT, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT, SHOW_COMMENT_FORM, HIDE_COMMENT_FORM} from '../actions/comments'
+import {FETCH_COMMENTS, VOTE_COMMENT, ADD_COMMENT, UPDATE_COMMENT, DELETE_COMMENT} from '../actions/comments'
 
 export default function comments(state = {}, action) {
   const {comments, comment} = action
@@ -15,15 +15,6 @@ export default function comments(state = {}, action) {
     case DELETE_COMMENT:
       delete state[comment.id]
       return state
-    case SHOW_COMMENT_FORM:
-      return {
-       comment,
-       isOpen: true
-      }
-    case HIDE_COMMENT_FORM:
-     return {
-       isOpen: false
-     }
     default:
       return state
   }

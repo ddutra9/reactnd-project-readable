@@ -13,3 +13,10 @@ export const handleGetCategories = () => dispatch => {
       dispatch(hideLoading())
     })
 }
+
+export function getCategories(categories) {
+  return {
+    type: GET_CATEGORIES,
+    categories,
+  }
+}

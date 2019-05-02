@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Button, Icon } from 'semantic-ui-react'
-import { handleVoteOnPost } from '../actions/posts'
-import CommentList from './CommentList'
-import { handleComments } from '../actions/comments'
+import { handleVoteOnPost } from '../../actions/posts'
+import CommentList from '../comments/CommentList'
+import { handleComments } from '../../actions/comments'
+import {withRouter} from 'react-router-dom'
 
 const likeButton = {
     padding: '10px 6px 10px 12px',
@@ -41,7 +42,7 @@ class PostView extends Component {
         this.props.likeUnlike(postId, false)
     }
 
-    gotoBack = () => {
+    onBack = () => {
         this.props.history.goBack()
     }
 
@@ -52,7 +53,7 @@ class PostView extends Component {
             <div style={divRoot}>
                 <Container>
                     <div className="pull-right">
-                        <Button basic onClick={this.gotoBack}>Back</Button>
+                        <Button basic onClick={this.onBack}>Back</Button>
                     </div>
 
                     <div class="ui raised very padded text container segment">
@@ -101,4 +102,4 @@ const mapDispatch = (dispatch) => {
     }
 }
 
-export default connect(mapState, mapDispatch)(PostView)
+export default withRouter(connect(mapState, mapDispatch)(PostView))

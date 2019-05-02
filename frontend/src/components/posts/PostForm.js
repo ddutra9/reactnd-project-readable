@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Form, Button } from 'semantic-ui-react'
-import { handleAddPosts } from '../actions/posts'
+import { handleAddPosts } from '../../actions/posts'
 import {withRouter} from 'react-router-dom'
 
 class PostForm extends Component {
@@ -15,19 +15,15 @@ class PostForm extends Component {
         author: this.props.post ? this.props.post.author : undefined,
     }
 
-    handleChange = (e) => {
+    onChange = (e) => {
         e.preventDefault()
         this.setState({[e.target.name]: e.target.value})
     }
 
-    handleSubmit = (e) => {
+    onSubmit = (e) => {
         e.preventDefault()
         const { title, body, category, author, id } = this.state
-        this.props.handleSubmit(title, body, category, author, id)
-    }
-
-    handleCancel = () => {
-        this.props.history.goBack()
+        this.props.onSubmit(title, body, category, author, id)
     }
     
     render() {
@@ -35,13 +31,13 @@ class PostForm extends Component {
         const { isSubmitting, title, body, category, author } = this.state
 
         return (
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.onSubmit}>
                 <Form.Group>
                     <Form.Field width={10}>
                         <label>Title</label>
                         <input
                             type="text" name="title"
-                            onChange={this.handleChange}
+                            onChange={this.onChange}
                             value={title}
                         />
                     </Form.Field>
@@ -50,7 +46,7 @@ class PostForm extends Component {
                         <label>Category</label>
                         <select
                             name="category"
-                            onChange={this.handleChange}
+                            onChange={this.onChange}
                             disabled={post}
                             value={category}
                         >
@@ -66,7 +62,7 @@ class PostForm extends Component {
                     <label>Body</label>
                     <textarea
                         name="body" rows={12}
-                        onChange={this.handleChange}
+                        onChange={this.onChange}
                         value={body}
                     ></textarea>
                 </Form.Field>
@@ -75,7 +71,7 @@ class PostForm extends Component {
                     <label>Author</label>
                     <input
                         type="text" name="author"
-                        onChange={this.handleChange}
+                        onChange={this.onChange}
                         disabled={post}
                         value={author}
                     />

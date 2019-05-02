@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Grid, Card, Button, Icon } from 'semantic-ui-react'
-import { handleVoteOnPost, handleDeletePost } from '../actions/posts'
+import { handleVoteOnPost, handleDeletePost } from '../../actions/posts'
 import {withRouter} from 'react-router-dom'
 
 const PostList = ({ post, deletePost, likeUnlike, history }) => {
@@ -15,7 +15,7 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
         backgroundColor: 'white',
     }
 
-    const handleDeletePost = () => {
+    const onDeletePost = () => {
         deletePost(post.id)
     }
 
@@ -23,15 +23,15 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
         history.push(`/posts/${post.id}/view`)
     }
 
-    const handleEditPost = () => {
+    const onEditPost = () => {
         history.push(`/posts/${post.id}/edit`)
     }
 
-    const handleLike = () => {
+    const onLike = () => {
         likeUnlike(post.id, true)
     }
 
-    const handleUnLike = () => {
+    const onUnlike = () => {
         likeUnlike(post.id, false)
     }
 
@@ -50,15 +50,15 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
                 <Card.Content extra>                
                     <Grid>
                         <Grid.Column width={8}>
-                            <Button style={likeButton} onClick={handleLike}><Icon name="thumbs up" /></Button>
-                            <Button style={likeButton} onClick={handleUnLike}><Icon name="thumbs down" /></Button>
+                            <Button style={likeButton} onClick={onLike}><Icon name="thumbs up" /></Button>
+                            <Button style={likeButton} onClick={onUnlike}><Icon name="thumbs down" /></Button>
                             <span>{post.voteScore}</span>
                         </Grid.Column>
 
                         <Grid.Column width={8} style={{ textAlign: "right" }}>
                             <Button style={likeButton} onClick={onViewPost}>view</Button>
-                            <Button style={likeButton} onClick={handleEditPost}>edit</Button>
-                            <Button style={likeButton} onClick={handleDeletePost}>remove</Button>
+                            <Button style={likeButton} onClick={onEditPost}>edit</Button>
+                            <Button style={likeButton} onClick={onDeletePost}>remove</Button>
                         </Grid.Column>
                     </Grid>
                 </Card.Content>
