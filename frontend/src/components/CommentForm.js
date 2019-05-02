@@ -25,7 +25,7 @@ class CommentForm extends Component {
     }
 
     render() {
-        const { handleChange, isSubmitting, onCancel, comment} = this.props
+        const { isSubmitting, onCancel, comment} = this.props
         const {author, body} = this.state
 
         return (
@@ -35,7 +35,7 @@ class CommentForm extends Component {
                     <input
                         type="text" name="author"
                         disabled={this.props.comment}
-                        onChange={handleChange}
+                        onChange={this.handleChange}
                         value={author}
                     />
                 </Form.Field>
@@ -44,7 +44,7 @@ class CommentForm extends Component {
                     <label>Your Comment</label>
                     <textarea
                         name="body" rows={3}
-                        onChange={handleChange}
+                        onChange={this.handleChange}
                         value={body}
                     ></textarea>
                 </Form.Field>

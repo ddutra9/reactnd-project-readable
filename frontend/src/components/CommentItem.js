@@ -1,172 +1,112 @@
-// External Depedencies
 import React, { Component } from 'react'
-import styled from 'styled-components';
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button, Segment, Label, Icon } from 'semantic-ui-react'
-
-// Our Depedecies
-import actions from '../../actions'
-import CommentModel from '../../models/CommentModel'
+import { Icon, Container } from 'semantic-ui-react'
+import {handleVoteOnComment, handleDeleteComment, handleUpdateComment} from '../actions/comments'
 import CommentForm from './CommentForm'
-
-// Style
-export const Details = styled.div`
-font-size: 12px;
-color: #757575;
-`
-export const CommentText = styled.div`
-font-size: 13px;
-`
-export const MiniButton = styled(Button)`
-margin:0 !important;
-padding: 7px 0.5em 7px 1.0em !important;
-border-radius:0 !important;
-`
-export const VoteLabel = styled(Label)`
-font-size:11px !important;
-margin: 0 !important;
-border-radius: 0 !important;
-border-left: 0 !important;
-border-top: 0 !important;
-`
-export const GroupMiniButtons = styled(Button.Group)``
-export const Attached = styled.div`
-position: absolute;
-right: -1px;
-top: -1px;
-`
-export const WrapperComment = styled(Segment) `
-position: relative;
-padding: 12px;
-background-color: yellow;
-`
-
 
 class CommentItem extends Component {
 
     state = {
-        mode: 'view'
+        status: 'view'
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        // if (nextState.mode === this.state.mode) return false
-        // if (nextProps.data.updated_at === this.props.data.updated_at) return false
-        return true
+    onUpdateStatus = (status) => {
+        this.setState({status})
     }
 
-    handleChangeMode = (mode) => {
-        this.setState({mode})
+    onDelete = () => {
+        this.onUpdateStatus('saveOrDelete')
+        this.props.deleteComment(this.props.data.id)
     }
 
-    handleView = () => {
-        this.handleChangeMode('view')
+    onLike = () => {
+        this.props.likeOrUnlike(this.props.data.id, true)
     }
 
-    handleEdit = () => {
-        this.handleChangeMode('edit')
+    onUnlike = () => {
+        this.props.likeOrUnlike(this.props.data.id, false)
     }
 
-    handleDelete = () => {
-        this.handleChangeMode('deleting')
-        this.props.deleteComment(this.props.data)
-    }
-
-    handleUpVote = () => {
-        this.props.voteComment(this.props.data, true)
-    }
-
-    handleDownVote = () => {
-        this.props.voteComment(this.props.data, false)
-    }
-
-    submit = (values) => {
-        this.handleChangeMode('saving')
-        this.props.saveComment(values, this.props.post_id).then(response => {
+    onSubmit = (id, parentId, body, author) => {
+        this.onUpdateStatus('saveOrDelete')
+        this.props.updateComment(id, body).then(response => {
                 this.handleChangeMode('view')
             })
     }
 
-    submitted = () => {
-        this.handleChangeMode('view')
-    }
-
-    cancel = () => {
+    onCancel = () => {
         this.setState({mode:'view'})
     }
 
     render() {
-        const comment = new CommentModel(this.props.data)
+        const comment = this.props.data
 
         return (
-            <WrapperComment>
+            <Container>
 
-                {this.state.mode === 'view' && (
-                    <div>
-                        <Attached>
-                            <GroupMiniButtons>
-                                <MiniButton onClick={this.handleEdit} alt="edit">
-                                    <Icon size="small" name="edit" />
-                                </MiniButton>
-                                <MiniButton onClick={this.handleDelete} alt="delete">
-                                    <Icon size="small" name="delete" />
-                                </MiniButton>
-                                <MiniButton onClick={this.handleUpVote}>
-                                    <Icon size="small" name="thumbs up" />
-                                </MiniButton>
-                                <MiniButton onClick={this.handleDownVote}>
-                                    <Icon size="small" name="thumbs down" />
-                                </MiniButton>
-                            </GroupMiniButtons>
-                            <VoteLabel basic>
-                                {comment.votes}
-                            </VoteLabel>
-                        </Attached>
-
-                        <Details>
-                            By {comment.author}, {comment.date}
-                        </Details>
-
-                        <CommentText>
-                            {comment.comment}
-                        </CommentText>
+                {this.state.status === 'view' && (
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <div class="header">
+                                {comment.author}, {comment.date}
+                            </div>
+                            <div class="description">
+                                <p>{comment.comment}</p>
+                            </div>
+                            <div class="extra">
+                                <button class="mini ui button" onClick={this.onUpdateStatus('edit')}>
+                                    <Icon size="mini" name="edit" />
+                                </button>
+                                <button class="mini ui button" onClick={this.onDelete()}>
+                                    <Icon size="mini" name="delete" />
+                                </button>
+                                <div class="ui labeled button" tabindex="0">
+                                    <div class="ui button" onClick={this.onLike}>
+                                        <i size="mini" name="thumbs up"></i> 
+                                    </div>
+                                    <div class="ui button" onClick={this.onUnlike}>
+                                        <i size="mini" name="thumbs down"></i>
+                                    </div>
+                                    <a class="ui basic red left pointing label">
+                                        {comment.votes}
+                                    </a>
+                                </div>                        
+                            </div>
+                        </div>
                     </div>
                 )}
 
-                {this.state.mode === 'edit' && (
+                {this.state.status === 'edit' && (
                     <div>
                         <CommentForm
                             className="comment-form"
                             postId={this.props.postId}
-                            initialValues={comment}
-                            onSubmitSuccess={this.submitted}
-                            onCancel={this.cancel}
+                            comment={comment}
+                            onSubmit={this.onSubmit}
+                            onCancel={this.onCancel}
                         />
                     </div>
                 )}
 
-                {this.state.mode === 'deleting' && (
-                    <div>
-                        Removendo comment of the {comment.author}
+                {this.state.status === 'saveOrDelete' && (
+                    <div class="ui segment">
+                        <p></p>
+                        <div class="ui active dimmer">
+                            <div class="ui loader"></div>
+                        </div>
                     </div>
                 )}
 
-                {this.state.mode === 'saving' && (
-                    <div>
-                        Salvando comment of the {comment.author}
-                    </div>
-                )}
-
-            </WrapperComment>
+            </Container>
         )
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
-        saveComment: (comment) => dispatch(actions.comments.saveComment(comment)),
-        deleteComment: (comment) => dispatch(actions.comments.deleteComment(comment)),
-        voteComment: (comment, increment) => dispatch(actions.comments.voteComment(comment, increment)),
+        updateComment: (id, body) => dispatch(handleUpdateComment(id, body)),
+        deleteComment: (id) => dispatch(handleDeleteComment(id)),
+        likeOrUnlike: (id, isLiked) => dispatch(handleVoteOnComment(id, isLiked)),
     }
 }
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {addPost} from '../actions/posts'
 import {addPostAPI} from '../utils/api'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
 import PostForm from './PostForm'
 import Nav from './Nav'
 

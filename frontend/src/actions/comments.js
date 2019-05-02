@@ -1,4 +1,4 @@
-import {getCommentsForPostAPI, voteOnCommentAPI, deleteCommentAPI, addCommentAPI } from '../utils/api.js'
+import {getCommentsForPostAPI, voteOnCommentAPI, deleteCommentAPI, addCommentAPI, editCommentAPI } from '../utils/api.js'
 import {showLoading, hideLoading} from 'react-redux-loading'
 
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
@@ -37,6 +37,14 @@ export const handleAddComments = (parentId, body, author) => dispatch => {
 
   return addCommentAPI(data).then((comment) => {
     dispatch({type: ADD_COMMENT, comment})
+  }).then(() => dispatch(hideLoading()))
+}
+
+export const handleUpdateComment = (id, body) => dispatch => {
+  dispatch(showLoading())
+
+  return editCommentAPI(id, body).then((comment) => {
+    dispatch({type: UPDATE_COMMENT, comment})
   }).then(() => dispatch(hideLoading()))
 }
 
