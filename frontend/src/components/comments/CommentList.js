@@ -17,13 +17,13 @@ const CommentList = (props) => {
     return (
         <Container>
             <h3>Comments: {comments.length}</h3>
-            {comments.map(comment => (
+            {comments.length > 0 && comments.map(comment => (
                 <CommentItem comment={comment} postId={props.postId} />
             ))}
 
             <hr className="divider" />
 
-            <h3>Leave a Comment</h3>
+            <h3>Leave a comment</h3>
             <CommentForm 
                 className="comment-form" 
                 postId={props.postId} 

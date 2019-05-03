@@ -12,7 +12,7 @@ class Header extends Component {
     return (
       <Container>
         <Menu>
-          {menuList.map(item => <Menu.Item as={NavLink} exact to={item.to} content={item.label} />)}
+          {menuList.map(item => <Menu.Item key={item.label} as={NavLink} exact to={item.to} content={item.label} />)}
         </Menu>
       </Container>
     )

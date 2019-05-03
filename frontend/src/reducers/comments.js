@@ -6,15 +6,17 @@ export default function comments(state = {}, action) {
     case FETCH_COMMENTS:
       return comments
     case VOTE_COMMENT:
-    case ADD_COMMENT:
     case UPDATE_COMMENT:
-      return {
-        ...state,
-        [comment.id] : comment
-      }
+      return state.map(c => {
+        if(c.id === comment.id){
+          return comment
+        }
+        return c
+      })
+    case ADD_COMMENT:
+      return state.concat(comment)
     case DELETE_COMMENT:
-      delete state[comment.id]
-      return state
+      return state.filter(c => c.id !== comment.id)
     default:
       return state
   }

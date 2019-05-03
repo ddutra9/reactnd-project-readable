@@ -67,8 +67,7 @@ export const handleVoteOnComment = (commentId, isLiked) => dispatch => {
         type: VOTE_COMMENT,
         comment,
       })
-      dispatch(hideLoading())
-    })
+    }).then(() => dispatch(hideLoading()))
 }
 
 export const handleDeleteComment = (commentId) => dispatch => {
@@ -78,6 +77,5 @@ export const handleDeleteComment = (commentId) => dispatch => {
         type: DELETE_COMMENT,
         comment,
       })
-      dispatch(hideLoading())
-    })
+    }).then(() => dispatch(hideLoading()))
 }

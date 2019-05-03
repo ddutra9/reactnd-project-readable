@@ -16,6 +16,7 @@ const Filter = ({categories, selected, onChange}) => {
                     />
                 {categories.map(category => (
                     <Form.Radio
+                        key={category.name}
                         checked={selected === category.name}
                         label={category.name}
                         name="category"

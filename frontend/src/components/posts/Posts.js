@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Grid, Segment, Item } from 'semantic-ui-react'
 import { handleReceivePostsBy, handleSortPost } from '../../actions/posts'
-import { handleGetCategories } from '../../actions/index'
+import { handleGetCategories } from '../../actions/categories'
 import PostList from './PostList'
 import Filter from '../Filter'
 import SortPost from '../SortPost'
@@ -22,10 +22,10 @@ class Posts extends Component {
     onChangeFilter = (e, { value }) => {
         if(value === 'all'){
             this.props.getPostsBy(undefined)
-            this.setState({filterBy : undefined});
+                .then(() => this.setState({filterBy : undefined}))
         } else{
             this.props.getPostsBy(value)
-            this.setState({filterBy : value});
+                .then(() => this.setState({filterBy : value}))
         }
     }
 
@@ -74,7 +74,7 @@ class Posts extends Component {
                                     <PostList key={post.id} post={post} />
                                 ))}
                                 {posts.length === 0 && (
-                                    `Sorry! There are no results that match with the category '${filterBy.value}'.`
+                                    'No posts found'
                                 )}
                             </Grid>
                         </div>

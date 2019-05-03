@@ -24,7 +24,7 @@ class PostEdit extends Component {
 
     onSubmit = (title, body, category, author, id) => {
         this.props.updatePost(id, title, body)
-        this.props.history.goBack()
+            .then(() => this.props.history.goBack())        
     }
 
     renderPost() {

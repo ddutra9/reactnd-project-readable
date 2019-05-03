@@ -14,9 +14,13 @@ class CommentItem extends Component {
         this.setState({status})
     }
 
+    onEdit = () => {
+        this.onUpdateStatus('edit')
+    }
+
     onDelete = () => {
         this.onUpdateStatus('saveOrDelete')
-        this.props.deleteComment(this.props.comment.id)
+        this.props.deleteComment(this.props.comment.id).then(() => this.onUpdateStatus('view'))
     }
 
     onLike = () => {
@@ -29,9 +33,7 @@ class CommentItem extends Component {
 
     onSubmit = (id, parentId, body, author) => {
         this.onUpdateStatus('saveOrDelete')
-        this.props.updateComment(id, body).then(response => {
-                this.handleChangeMode('view')
-            })
+        this.props.updateComment(id, body).then(() => this.onUpdateStatus('view'))
     }
 
     onCancel = () => {
@@ -45,32 +47,30 @@ class CommentItem extends Component {
             <Container>
 
                 {this.state.status === 'view' && (
-                    <div class="item">
-                        <div class="middle aligned content">
-                            <div class="header">
-                                {comment.author}, {comment.date}
-                            </div>
-                            <div class="description">
-                                <p>{comment.comment}</p>
-                            </div>
-                            <div class="extra">
-                                <button class="mini ui button" onClick={this.onUpdateStatus('edit')}>
-                                    <Icon size="mini" name="edit" />
-                                </button>
-                                <button class="mini ui button" onClick={this.onDelete()}>
-                                    <Icon size="mini" name="delete" />
-                                </button>
-                                <div class="ui labeled button" tabindex="0">
-                                    <div class="ui button" onClick={this.onLike}>
-                                        <i size="mini" name="thumbs up"></i> 
-                                    </div>
-                                    <div class="ui button" onClick={this.onUnlike}>
-                                        <i size="mini" name="thumbs down"></i>
-                                    </div>
-                                    <a class="ui basic red left pointing label">
-                                        {comment.votes}
-                                    </a>
-                                </div>                        
+                    <div class="ui items">
+                        <div class="item">
+                            <div class="middle aligned content">
+                                <div class="header">
+                                    {comment.author}
+                                </div>
+                                <div class="description">
+                                    <p>{comment.body}</p>
+                                </div>
+                                <div class="extra">
+                                    <button class="mini ui button" onClick={this.onEdit}>
+                                        <Icon name="edit" />
+                                    </button>
+                                    <button class="mini ui button" onClick={this.onDelete}>
+                                        <Icon name="delete" />
+                                    </button>
+                                    <button class="mini ui button" onClick={this.onLike}>
+                                        <Icon name="thumbs up" />
+                                    </button>
+                                    <button class="mini ui button" onClick={this.onUnlike}>
+                                        <Icon name="thumbs down" />
+                                    </button>
+                                    {comment.voteScore}                    
+                                </div>
                             </div>
                         </div>
                     </div>

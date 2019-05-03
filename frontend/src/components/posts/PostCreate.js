@@ -14,7 +14,7 @@ const CreatePost = (props) => {
     const onSubmit = (title, body, category, author, id) => {
         console.log(body)
         props.addPost(title, category, body, author)
-        props.history.goBack()
+            .then(() => props.history.goBack())        
     }
 
     return (

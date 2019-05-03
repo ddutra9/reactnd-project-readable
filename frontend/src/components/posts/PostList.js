@@ -45,7 +45,7 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
                 </Card.Content>
                 <Card.Content extra>
                     <Icon name='comment outline' />
-                    {post.commentCount} Comentario(s)
+                    {post.commentCount} Comments
                 </Card.Content>
                 <Card.Content extra>                
                     <Grid>
@@ -54,13 +54,12 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
                             <Button style={likeButton} onClick={onUnlike}><Icon name="thumbs down" /></Button>
                             <span>{post.voteScore}</span>
                         </Grid.Column>
-
-                        <Grid.Column width={8} style={{ textAlign: "right" }}>
-                            <Button style={likeButton} onClick={onViewPost}>view</Button>
-                            <Button style={likeButton} onClick={onEditPost}>edit</Button>
-                            <Button style={likeButton} onClick={onDeletePost}>remove</Button>
-                        </Grid.Column>
                     </Grid>
+                    <Grid.Column width={8}>
+                        <button class="mini ui button" onClick={onViewPost}>view</button>
+                        <button class="mini ui button" onClick={onEditPost}>edit</button>
+                        <button class="mini ui button" onClick={onDeletePost}>remove</button>
+                    </Grid.Column>
                 </Card.Content>
             </Card>
         </Grid.Column>
