@@ -56,8 +56,8 @@ class PostView extends Component {
                         <Button basic onClick={this.onBack}>Back</Button>
                     </div>
 
-                    <div class="ui raised very padded text container segment">
-                        <h2 class="ui header">{post.title}</h2>
+                    <div className="ui raised very padded text container segment">
+                        <h2 className="ui header">{post.title}</h2>
                         <p>Category: {post.category}, by {post.author}, {post.date}</p>
                         <p>{post.body}</p>
                         <div style={divVote}>

@@ -56,9 +56,9 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
                         </Grid.Column>
                     </Grid>
                     <Grid.Column width={8}>
-                        <button class="mini ui button" onClick={onViewPost}>view</button>
-                        <button class="mini ui button" onClick={onEditPost}>edit</button>
-                        <button class="mini ui button" onClick={onDeletePost}>remove</button>
+                        <button className="mini ui button" onClick={onViewPost}>view</button>
+                        <button className="mini ui button" onClick={onEditPost}>edit</button>
+                        <button className="mini ui button" onClick={onDeletePost}>remove</button>
                     </Grid.Column>
                 </Card.Content>
             </Card>

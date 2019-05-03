@@ -47,26 +47,26 @@ class CommentItem extends Component {
             <Container>
 
                 {this.state.status === 'view' && (
-                    <div class="ui items">
-                        <div class="item">
-                            <div class="middle aligned content">
-                                <div class="header">
+                    <div className="ui items">
+                        <div className="item">
+                            <div className="middle aligned content">
+                                <div className="header">
                                     {comment.author}
                                 </div>
-                                <div class="description">
+                                <div className="description">
                                     <p>{comment.body}</p>
                                 </div>
-                                <div class="extra">
-                                    <button class="mini ui button" onClick={this.onEdit}>
+                                <div className="extra">
+                                    <button className="mini ui button" onClick={this.onEdit}>
                                         <Icon name="edit" />
                                     </button>
-                                    <button class="mini ui button" onClick={this.onDelete}>
+                                    <button className="mini ui button" onClick={this.onDelete}>
                                         <Icon name="delete" />
                                     </button>
-                                    <button class="mini ui button" onClick={this.onLike}>
+                                    <button className="mini ui button" onClick={this.onLike}>
                                         <Icon name="thumbs up" />
                                     </button>
-                                    <button class="mini ui button" onClick={this.onUnlike}>
+                                    <button className="mini ui button" onClick={this.onUnlike}>
                                         <Icon name="thumbs down" />
                                     </button>
                                     {comment.voteScore}                    
@@ -89,10 +89,10 @@ class CommentItem extends Component {
                 )}
 
                 {this.state.status === 'saveOrDelete' && (
-                    <div class="ui segment">
+                    <div className="ui segment">
                         <p></p>
-                        <div class="ui active dimmer">
-                            <div class="ui loader"></div>
+                        <div className="ui active dimmer">
+                            <div className="ui loader"></div>
                         </div>
                     </div>
                 )}

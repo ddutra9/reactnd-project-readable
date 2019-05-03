@@ -24,6 +24,17 @@ const defaultData = {
     voteScore: -5,
     deleted: false,
     commentCount: 0
+  },
+  "8xf0y6ziyjabvozdd253nZ": {
+    id: '8xf0y6ziyjabvozdd253nZ',
+    timestamp: 1468479767190,
+    title: 'Learn with udacity courses!',
+    body: 'Be a best programer ever.',
+    author: 'ddutra',
+    category: 'udacity',
+    voteScore: 10,
+    deleted: false,
+    commentCount: 0
   }
 }
 

@@ -1,7 +1,7 @@
 import {DELETE_POST, ADD_POST, UPDATE_POST, VOTE_POST, FETCH_CATEGORY_POSTS, RECEIVE_POSTS, SORT_POST_BY} from '../actions/posts'
 
 export default function posts(state = {}, action) {
-  const { posts, post, type, sortBy} = action
+  const { posts, post, type} = action
   switch (type) {
     case FETCH_CATEGORY_POSTS:
     case RECEIVE_POSTS: 

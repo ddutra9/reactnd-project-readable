@@ -18,7 +18,7 @@ const CommentList = (props) => {
         <Container>
             <h3>Comments: {comments.length}</h3>
             {comments.length > 0 && comments.map(comment => (
-                <CommentItem comment={comment} postId={props.postId} />
+                <CommentItem key={comment.id} comment={comment} postId={props.postId} />
             ))}
 
             <hr className="divider" />

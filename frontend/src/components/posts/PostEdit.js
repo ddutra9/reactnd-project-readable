@@ -43,10 +43,10 @@ class PostEdit extends Component {
 
     renderLoading() {
         return (
-            <div class="ui segment">
+            <div className="ui segment">
                 <p></p>
-                <div class="ui active dimmer">
-                    <div class="ui loader"></div>
+                <div className="ui active dimmer">
+                    <div className="ui loader"></div>
                 </div>
             </div>
         )
