@@ -6,6 +6,7 @@ import { handleGetCategories } from '../../actions/categories'
 import PostList from './PostList'
 import Filter from '../Filter'
 import SortPost from '../SortPost'
+import {withRouter} from 'react-router-dom'
 
 class Posts extends Component {
 
@@ -21,9 +22,11 @@ class Posts extends Component {
 
     onChangeFilter = (e, { value }) => {
         if(value === 'all'){
+            this.props.history.push(`/`)
             this.props.getPostsBy(undefined)
                 .then(() => this.setState({filterBy : undefined}))
         } else{
+            this.props.history.push(`/${value}`)
             this.props.getPostsBy(value)
                 .then(() => this.setState({filterBy : value}))
         }
@@ -101,4 +104,4 @@ const mapDispatch = (dispatch) => {
     }
 }
 
-export default connect(mapState, mapDispatch)(Posts)
+export default withRouter(connect(mapState, mapDispatch)(Posts))

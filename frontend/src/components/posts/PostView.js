@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Container, Button, Icon } from 'semantic-ui-react'
-import { handleVoteOnPost } from '../../actions/posts'
+import { handleVoteOnPost, handleDeletePost } from '../../actions/posts'
 import CommentList from '../comments/CommentList'
 import { handleComments } from '../../actions/comments'
 import {withRouter} from 'react-router-dom'
@@ -46,6 +46,18 @@ class PostView extends Component {
         this.props.history.goBack()
     }
 
+    onEditPost = () => {
+        const postId = this.props.match.params.post_id
+        const category = this.props.match.params.category
+        this.props.history.push(`/${category}/${postId}/edit`)
+    }
+
+    onDeletePost = () => {
+        const postId = this.props.match.params.post_id
+        this.props.deletePost(postId)
+        this.props.history.goBack()
+    }
+
     render() {
         const {post} = this.props
 
@@ -73,6 +85,10 @@ class PostView extends Component {
                                     </Button>
                                     <span className="votes"> {post.voteScore}</span>
                                 </div>
+                                <div>
+                                    <Button onClick={this.onEditPost}>edit</Button>
+                                    <Button onClick={this.onDeletePost}>remove</Button>
+                                </div>
                             </Container>
                         </div>
                     </div>
@@ -98,7 +114,8 @@ const mapState = (state, props) => {
 const mapDispatch = (dispatch) => {
     return {
         likeUnlike: (postId, isLike) => dispatch(handleVoteOnPost(postId, isLike)),
-        getCommentsByPost: (postId) => dispatch(handleComments(postId))
+        getCommentsByPost: (postId) => dispatch(handleComments(postId)),
+        deletePost: (postId) => dispatch(handleDeletePost(postId)),
     }
 }
 

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Page404 from './components/Page404'
+import { handleReceivePostsBy, handleSortPost } from './actions/posts'
 import Header from './components/header'
 import LoadingBar from 'react-redux-loading'
 import Posts from './components/posts/Posts'
@@ -15,6 +16,10 @@ const divMain = {
 
 class App extends Component {
 
+    componentDidMount() {
+        this.props.getPostsBy()
+    }
+
     render() {
       return (
         <Router>
@@ -23,13 +28,18 @@ class App extends Component {
             <div>
               <Header />
               <div style={divMain}>
-                <Switch>
-                  <Route path='/' exact component={Posts} />
-                  <Route path='/posts/:post_id/edit' component={PostEdit} />
-                  <Route path='/posts/:post_id/view' component={PostView} />
-                  <Route path='/new-post' component={PostCreate} />
-                  <Route component={Page404} />
-                </Switch>
+                {this.props.posts.length >= 0
+                  ? 
+                  <Switch>
+                    <Route path='/' exact component={Posts} />
+                    <Route path='/new-post' component={PostCreate} />
+                    <Route path='/:category' exact component={Posts} />
+                    <Route path='/:category/:post_id/edit' component={PostEdit} />
+                    <Route path='/:category/:post_id/view' component={PostView} />
+                    <Route component={Page404} />
+                  </Switch>
+                  : null
+                }
               </div>
             </div>
           </Fragment>
@@ -39,7 +49,13 @@ class App extends Component {
 }
 
 const mapState = (state) => ({
-  status: state.status
+  posts: state.posts
 })
 
-export default connect(mapState)(App)
+const mapDispatch = (dispatch) => {
+  return {
+      getPostsBy: (value) => dispatch(handleReceivePostsBy(value)),
+  }
+}
+
+export default connect(mapState, mapDispatch)(App)
