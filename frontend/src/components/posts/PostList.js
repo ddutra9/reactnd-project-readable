@@ -20,7 +20,7 @@ const PostList = ({ post, deletePost, likeUnlike, history }) => {
     }
 
     const onViewPost = () => {
-        history.push(`/${post.category}/${post.id}/view`)
+        history.push(`/${post.category}/${post.id}`)
     }
 
     const onEditPost = () => {

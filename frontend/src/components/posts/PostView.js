@@ -29,7 +29,11 @@ class PostView extends Component {
 
     constructor(props) {
         super(props);
-        this.props.getCommentsByPost(this.props.post.id)
+        if(this.props.post){
+            this.props.getCommentsByPost(this.props.post.id)
+        } else{
+            this.props.history.push(`/404`)
+        }
     }
 
     onLike = () => {
