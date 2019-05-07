@@ -33,10 +33,10 @@ class App extends Component {
                   <Switch>
                     <Route path='/' exact component={Posts} />
                     <Route path='/new-post' component={PostCreate} />
+                    <Route path="/404" component={Page404} />
                     <Route path='/:category' exact component={Posts} />
                     <Route path='/:category/:post_id/edit' component={PostEdit} />
                     <Route path='/:category/:post_id' component={PostView} />
-                    <Route component={Page404} />
                   </Switch>
                   : null
                 }

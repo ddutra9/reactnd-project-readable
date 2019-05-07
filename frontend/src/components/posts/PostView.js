@@ -62,9 +62,7 @@ class PostView extends Component {
         this.props.history.goBack()
     }
 
-    render() {
-        const {post} = this.props
-
+    renderPost(post) {
         return (
             <div style={divRoot}>
                 <Container>
@@ -99,6 +97,16 @@ class PostView extends Component {
                 </Container>
 
                 <CommentList postId={post.id} />
+            </div>
+        )
+    }
+
+    render() {
+        const {post} = this.props
+
+        return (
+            <div>
+                {post ? this.renderPost(post) : null}
             </div>
         )
     }
